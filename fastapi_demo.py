@@ -24,54 +24,6 @@ model = "gpt-4o-mini"
 client = OpenAI(api_key=openai_api_key)
 
 
-# Endpoint to analyze image from URL
-@app.post("/analyze-url/")
-async def analyze_image_url(image_url: str = Form(...), prompt: str = Form(...)):
-    try:
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": prompt},
-                        {"type": "image_url", "image_url": image_url},
-                    ],
-                }
-            ],
-            max_tokens=300,
-        )
-
-        return JSONResponse(content=response.choices[0].get('message', {}))
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# Endpoint to analyze multiple images from URLs
-@app.post("/analyze-urls/")
-async def analyze_image_urls(image_urls: List[str] = Form(...), prompt: str = Form(...)):
-    try:
-        # Build the messages with images and prompt
-        messages = [
-            {"role": "user", "content": [{"type": "text", "text": prompt}]}
-        ]
-        for url in image_urls:
-            messages[0]["content"].append({"type": "image_url", "image_url": url})
-
-        # Send the request to OpenAI API
-        response = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            max_tokens=300,
-        )
-
-        return JSONResponse(content=response.choices[0].get('message', {}))
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 # Endpoint to analyze uploaded image
 @app.post("/analyze-upload/")
 async def analyze_uploaded_image(prompt: str = Form(...), image: UploadFile = File(...)):

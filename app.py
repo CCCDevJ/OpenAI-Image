@@ -18,7 +18,7 @@ payload = {"model": "gpt-3.5-turbo",
                    "content": [
                        {
                            "type": "text",
-                           "text": "What is in the image?"
+                           "text": "Give me all information about image like what is dimentions of objects in image, height, widhth, capacity, color of object, type of furniture used, matirial used in image etc."
                        },
                        {
                            "type": "image_url",
