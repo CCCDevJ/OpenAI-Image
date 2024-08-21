@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-OPENAI_FREE_KEY = os.getenv('OPENAI_KEY')
-print(OPENAI_FREE_KEY)
+OPENAI_KEY = os.getenv('OPENAI_KEY')
+# print(OPENAI_FREE_KEY)
 
 payload = {"model": "gpt-3.5-turbo",
            "messages": [
@@ -32,7 +32,7 @@ payload = {"model": "gpt-3.5-turbo",
            "max_tokens": 500
            }
 
-headers = {"Authorization": f"Bearer {OPENAI_FREE_KEY}",
+headers = {"Authorization": f"Bearer {OPENAI_KEY}",
            "Content-Type": "application/json"}
 
 response = requests.post('https://api.openai.com/v1/chat/completions', headers=headers, json=payload)
