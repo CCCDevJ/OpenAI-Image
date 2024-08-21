@@ -1,0 +1,4 @@
+python-dotenv==1.0.0
+fastapi==0.110.2
+openai==1.42.0
+requests
