@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 # OpenAI API Key
-api_key = os.getenv("OPENAI_KEY")
+api_key = os.getenv("OPENAI_API_KEY")
 
 
 # Function to encode the image

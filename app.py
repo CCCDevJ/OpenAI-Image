@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-OPENAI_KEY = os.getenv('OPENAI_KEY')
+OPENAI_KEY = os.getenv('OPENAI_API_KEY')
 # print(OPENAI_FREE_KEY)
 
 payload = {"model": "gpt-3.5-turbo",

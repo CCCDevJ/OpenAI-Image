@@ -14,7 +14,7 @@ load_dotenv()
 app = FastAPI()
 
 # Set up OpenAI API key
-openai_api_key = os.getenv("OPENAI_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Setup model
 # model = "gpt-4o"
