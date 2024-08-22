@@ -27,8 +27,12 @@ headers = {
 }
 
 payload = {
-    "model": "gpt-4o-mini",
+    "model": "gpt-4o",
     "messages": [
+        {
+            "role": "system",
+            "content": "Act as you are helpful image data extractor."
+        },
         {
             "role": "user",
             "content": [
@@ -45,7 +49,7 @@ payload = {
             ]
         }
     ],
-    "max_tokens": 300
+    "max_tokens": 1000
 }
 
 response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)

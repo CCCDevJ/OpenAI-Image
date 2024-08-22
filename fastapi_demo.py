@@ -17,11 +17,22 @@ app = FastAPI()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 # Setup model
-# model = "gpt-4o"
-model = "gpt-4o-mini"
+model = "gpt-4o"
+# model = "gpt-4o-mini"
 
 # Open AI Client
 client = OpenAI(api_key=openai_api_key)
+
+system_role = {
+    "role": "system",
+    "content": [
+        {
+            "type": "text",
+            "text": "You are a cool image analyst.  Your goal is to describe what is in this image."
+        }
+    ],
+}
+max_token = 1000
 
 
 # Endpoint to analyze uploaded image
@@ -43,22 +54,28 @@ async def analyze_uploaded_image(prompt: str = Form(...), image: UploadFile = Fi
         payload = {
             "model": model,
             "messages": [
+                system_role,
                 {
                     "role": "user",
                     "content": [
                         {"type": "text", "text": prompt},
-                        {"type": "image_url", "image_url": f"data:image/jpeg;base64,{base64_image}"}
+                        {
+                            "type": "image_url",
+                            "image_url": {
+                                "url": f"data:image/jpeg;base64,{base64_image}"
+                            }
+                        }
                     ]
                 }
             ],
-            "max_tokens": 300
+            "max_tokens": max_token
         }
 
         # Send the request to OpenAI API
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-
+        json_response = response.json()
         # Return the response from OpenAI API
-        return JSONResponse(content=response.json())
+        return {"status": 200, "response": json_response["choices"][0]["message"]["content"]}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -70,15 +87,18 @@ async def analyze_uploaded_images(prompt: str = Form(...), images: List[UploadFi
     try:
         # Build the messages with images and prompt
         messages = [
+            system_role,
             {"role": "user", "content": [{"type": "text", "text": prompt}]}
         ]
         for image in images:
             # Read and encode the image to base64
             image_data = await image.read()
             base64_image = base64.b64encode(image_data).decode('utf-8')
-            messages[0]["content"].append({
+            messages[1]["content"].append({
                 "type": "image_url",
-                "image_url": f"data:image/jpeg;base64,{base64_image}"
+                "image_url": {
+                    "url": f"data:image/jpeg;base64,{base64_image}"
+                }
             })
 
         # Create the payload for the OpenAI API request
@@ -90,14 +110,15 @@ async def analyze_uploaded_images(prompt: str = Form(...), images: List[UploadFi
         payload = {
             "model": model,
             "messages": messages,
-            "max_tokens": 300
+            "max_tokens": max_token
         }
 
         # Send the request to OpenAI API
         response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-
+        json_response = response.json()
         # Return the response from OpenAI API
-        return JSONResponse(content=response.json())
+        # return JSONResponse(content=json_response["choices"][0]["message"]["content"])
+        return {"status": 200, "response": json_response["choices"][0]["message"]["content"]}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

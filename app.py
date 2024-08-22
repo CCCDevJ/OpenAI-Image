@@ -9,10 +9,15 @@ OPENAI_KEY = os.getenv('OPENAI_API_KEY')
 
 payload = {"model": "gpt-3.5-turbo",
            "messages": [
-               {"role": "system",
-                "content": [{"type": "text",
-                             "text": "You are a cool image analyst.  Your goal is to describe what is in this image."}],
-                },
+               {
+                   "role": "system",
+                   "content": [
+                       {
+                           "type": "text",
+                           "text": "You are a cool image analyst.  Your goal is to describe what is in this image."
+                       }
+                   ],
+               },
                {
                    "role": "user",
                    "content": [
