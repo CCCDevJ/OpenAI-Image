@@ -148,3 +148,9 @@ if __name__ == "__main__":
 # -F "images=@path/to/your/image1.jpg" \
 # -F "images=@path/to/your/image2.jpg" \
 # -F "prompt=What are in these images?"
+
+# Prompt
+# Give me all information about image like what is dimensions of objects in image, height, width, capacity, color of object, type of furniture used, material used in image etc.
+# is this images are same give me answer only in true or false.
+# is this images are same give me answer only in true or false, give similarity percentage, if false then give proper reason
+# is this images are same give me answer only in true or false,give similarity percentage if false then give proper reason, all answers in json formate with proper keys, result: boolean, similarity_percentage: float, reason: string
