@@ -48,12 +48,21 @@ attribute_description = (
 
 image_prompt = f"You are an image analysis expert. The attributes of the image are: {attribute_description}."
 image_prompt += "Add an additional attributes your self. No extra description needed. Select any one value from options for each attribute."
+image_prompt += "includes Product Dimension like height, width, overall"
 image_prompt += "only in json format"
 
-image_prompt = "Give me all information about image like what is dimensions of objects in image, height, width, capacity, color of object, type of furniture used, material used in image etc."
+# image_prompt = "Give me all information about image like what is dimensions of objects in image, height, width, capacity, color of object, type of furniture used, material used in image etc."
+image_prompt =("Analyze the provided image and identify all the furniture Sofa items present. For each furniture item, return the following details in JSON format:"
+               "Name: The common name or type of the furniture.)"
+               "Category: The category it belongs to (e.g., chair, table, sofa)."
+               "Material: The primary material the furniture is made from (e.g., wood, metal, fabric)."
+               "Color: The color or primary colors of the furniture."
+               "Dimensions: The approximate dimensions (height, width, depth) in inch."
+               "Condition: Describe whether the furniture appears new, used, or vintage."
+               "Additional Features: Any other notable features such as adjustability, upholstery details, etc.")
+print(image_prompt)
 
-
-myfile = genai.upload_file(media / "No+Assembly+Required+2+-+Piece+Corduroy+Sofa.webp")
+myfile = genai.upload_file(media / "Tulen+Reclining+Sofa.webp")
 print(f"{myfile=}")
 
 model = genai.GenerativeModel("gemini-1.5-flash")

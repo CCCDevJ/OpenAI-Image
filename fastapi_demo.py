@@ -59,6 +59,16 @@ image_prompt = f"You are an image analysis expert. The attributes of the image a
 image_prompt += "Add an additional attributes your self. No extra description needed. Select any one value from options for each attribute."
 image_prompt += "only in json formate"
 
+image_prompt =("Analyze the provided image and identify all the furniture Sofa items present. For each furniture item, return the following details in JSON format:"
+               "Name: The common name or type of the furniture.)"
+               "Category: The category it belongs to (e.g., chair, table, sofa)."
+               "Material: The primary material the furniture is made from (e.g., wood, metal, fabric)."
+               "Color: The color or primary colors of the furniture."
+               "Dimensions: The approximate dimensions (height, width, depth) in inch."
+               "Condition: Describe whether the furniture appears new, used, or vintage."
+               "Additional Features: Any other notable features such as adjustability, upholstery details, etc.")
+print(image_prompt)
+
 system_role = {
     "role": "system",
     "content": [
